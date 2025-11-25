@@ -1,0 +1,74 @@
+my-financial-dashboard/
+├── public/                 # Static assets (favicons, images)
+├── src/                    # Main source code
+│   ├── app/                # Next.js App Router (Pages & Routes)
+│   ├── components/         # React Components (UI)
+│   ├── hooks/              # Custom React Hooks (State & Storage)
+│   ├── lib/                # Business Logic (Math, API, Parsers)
+│   └── types/              # TypeScript interfaces (Optional but recommended)
+├── .env.local              # (Optional) If you have non-secret defaults
+├── next.config.js          # Next.js configuration
+├── package.json            # Dependencies
+└── tailwind.config.js      # Tailwind styling config
+
+src/app/
+├── layout.tsx              # Global layout (contains the Navbar)
+├── page.tsx                # Home page (redirects to dashboard-stocks)
+├── globals.css             # Global styles & Tailwind imports
+│
+├── dashboard-stocks/       # URL: /dashboard-stocks
+│   └── page.tsx            # Assembles the Stocks Grid
+│
+├── dashboard-forex/        # URL: /dashboard-forex
+│   └── page.tsx            # Assembles the Forex Grid
+│
+└── settings/               # URL: /settings
+    └── page.tsx            # The Settings & CRUD Interface
+
+src/components/
+│
+├── layout/                 # Global structural components
+│   ├── Navbar.tsx          # Navigation menu
+│   └── GridContainer.tsx   # Reusable grid wrappers
+│
+├── shared/                 # Components used in multiple interfaces
+│   ├── NewsSection.tsx     # The bottom full-width section
+│   ├── NewsApiTab.tsx      # Tab 1 logic
+│   ├── InvestingTab.tsx    # Tab 2 logic (RSS table)
+│   └── NotesEditor.tsx     # Reusable Text Area for notes
+│
+├── stocks/                 # Components specific to Stocks Dashboard
+│   ├── PortfolioTable.tsx  # Down Left: The stock list
+│   ├── GeminiAnalysis.tsx  # Up Right & Down Right: The AI wrapper
+│   └── StockGrid.tsx       # The 2x2 Layout grid specific to stocks
+│
+├── forex/                  # Components specific to Forex Dashboard
+│   ├── ForexPortfolio.tsx  # Down Left (Part 1)
+│   ├── StrengthCharts.tsx  # Down Left (Part 2): The -1 to 1 graphs
+│   ├── FairValueCalc.tsx   # Down Right: Input + Normal Dist Graph
+│   └── CalendarEmbed.tsx   # Up Right: Investing.com iframe
+│
+└── settings/               # Components for Settings
+    ├── ApiKeyInput.tsx     # Inputs for Gemini/News keys
+    └── StorageTable.tsx    # The raw CRUD table for localStorage
+
+src/hooks/
+├── useLocalStorage.ts      # Syncs state with browser storage automatically
+├── useGemini.ts            # Handles the loading/error states for AI requests
+├── useMarketNews.ts        # Handles fetching RSS feeds & NewsAPI
+└── useForexData.ts         # Handles the complex ForexFactory scraping logic
+
+
+src/lib/
+├── storage.ts              # LocalStorage helper functions (get, set, remove)
+├── gemini.ts               # Function to build prompts & call Gemini API
+├── scraping.ts             # Logic to fetch & parse HTML/RSS via Proxies
+├── math-forex.ts           # Your custom formulas (Fair Value, Strength Score)
+└── constants.ts            # Default values, proxy URLs, API endpoints
+
+
+
+
+
+
+

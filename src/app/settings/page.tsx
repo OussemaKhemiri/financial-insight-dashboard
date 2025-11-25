@@ -22,11 +22,6 @@ export default function SettingsPage() {
                             label="Gemini API Key"
                             placeholder="Paste your Google Gemini Key here..."
                         />
-                        <ApiKeyInput
-                            storageKey="news_api_key"
-                            label="NewsAPI Key"
-                            placeholder="Paste your NewsAPI.org Key here..."
-                        />
                     </div>
                 </div>
 

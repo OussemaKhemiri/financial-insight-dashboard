@@ -1,6 +1,6 @@
 import GridContainer from "@/components/layout/GridContainer";
 import StockGrid from "@/components/stocks/StockGrid";
-
+import NotesEditor from "@/components/shared/NotesEditor";
 // Temporary Placeholder Component
 // We will replace these with real components (NotesEditor, PortfolioTable, etc.) in the next steps
 const Placeholder = ({ title, color, desc }: { title: string; color: string; desc?: string }) => (
@@ -16,10 +16,9 @@ export default function StocksDashboardPage() {
             <StockGrid
                 // UP LEFT: User Notes
                 upLeft={
-                    <Placeholder
-                        title="UP LEFT: Stock Notes"
-                        color="bg-yellow-100"
-                        desc="Rich text area to save thoughts to localStorage."
+                    <NotesEditor
+                        storageKey="stock_notes"
+                        title="Stock Market Notes"
                     />
                 }
 
