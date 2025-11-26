@@ -3,6 +3,8 @@ import ForexGrid from "@/components/forex/ForexGrid";
 import NotesEditor from "@/components/shared/NotesEditor";
 import MarketNewsTable from "@/components/shared/MarketNewsTable";
 import CalendarEmbed from "@/components/forex/CalendarEmbed";
+import ForexPortfolio from "@/components/forex/ForexPortfolio";
+import StrengthCharts from "@/components/forex/StrengthCharts"; 
 
 // Helper component for placeholders
 const Placeholder = ({ title, color }: { title: string; color: string }) => (
@@ -23,12 +25,8 @@ export default function ForexDashboardPage() {
                     />
                 }
                 upRight={<CalendarEmbed />}
-                downLeftPortfolio={
-                    <Placeholder title="DL (Left): Portfolio" color="bg-blue-50" />
-                }
-                downLeftCharts={
-                    <Placeholder title="DL (Right): Strength Charts" color="bg-indigo-50" />
-                }
+                downLeftPortfolio={<ForexPortfolio />}
+                downLeftCharts={<StrengthCharts />} 
                 downRight={
                     <Placeholder title="DOWN RIGHT: Fair Value Calc" color="bg-purple-50" />
                 }

@@ -55,7 +55,7 @@ src/components/
 src/hooks/
 ├── useLocalStorage.ts      # Syncs state with browser storage automatically
 ├── useGemini.ts            # Handles the loading/error states for AI requests
-├── useMarketNews.ts        # Handles fetching RSS feeds & NewsAPI
+├── useMarketNews.ts        # Handles fetching RSS feeds 
 └── useForexData.ts         # Handles the complex ForexFactory scraping logic
 
 

@@ -3,15 +3,19 @@ import { useState, useEffect } from "react";
 import { safelyGetStorage, safelySetStorage } from "@/lib/storage";
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
-    // State to store our value
-    // Pass initial state function to useState so logic is only executed once
-    const [storedValue, setStoredValue] = useState<T>(() => {
-        const item = safelyGetStorage(key);
-        return item !== null ? item : initialValue;
-    });
+    // 1. Always start with 'initialValue' so Server HTML matches Client HTML exactly.
+    // This prevents the "Hydration failed" error.
+    const [storedValue, setStoredValue] = useState<T>(initialValue);
 
-    // Return a wrapped version of useState's setter function that ...
-    // ... persists the new value to localStorage.
+    // 2. After the component mounts (Client-side only), load the real data.
+    useEffect(() => {
+        const item = safelyGetStorage(key);
+        if (item !== null) {
+            setStoredValue(item);
+        }
+    }, [key]);
+
+    // 3. Wrapper to set state and local storage simultaneously
     const setValue = (value: T | ((val: T) => T)) => {
         try {
             // Allow value to be a function so we have same API as useState
