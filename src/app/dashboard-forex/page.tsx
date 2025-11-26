@@ -1,6 +1,9 @@
 import GridContainer from "@/components/layout/GridContainer";
 import ForexGrid from "@/components/forex/ForexGrid";
 import NotesEditor from "@/components/shared/NotesEditor";
+import MarketNewsTable from "@/components/shared/MarketNewsTable";
+import CalendarEmbed from "@/components/forex/CalendarEmbed";
+
 // Helper component for placeholders
 const Placeholder = ({ title, color }: { title: string; color: string }) => (
     <div className={`w-full h-full flex flex-col items-center justify-center ${color} p-4`}>
@@ -19,9 +22,7 @@ export default function ForexDashboardPage() {
                         title="Forex Strategy Notes"
                     />
                 }
-                upRight={
-                    <Placeholder title="UP RIGHT: Economic Calendar" color="bg-green-50" />
-                }
+                upRight={<CalendarEmbed />}
                 downLeftPortfolio={
                     <Placeholder title="DL (Left): Portfolio" color="bg-blue-50" />
                 }
@@ -31,9 +32,7 @@ export default function ForexDashboardPage() {
                 downRight={
                     <Placeholder title="DOWN RIGHT: Fair Value Calc" color="bg-purple-50" />
                 }
-                bottomSection={
-                    <Placeholder title="BOTTOM: News & Investing.com" color="bg-slate-100" />
-                }
+                bottomSection={<MarketNewsTable />}
             />
         </GridContainer>
     );

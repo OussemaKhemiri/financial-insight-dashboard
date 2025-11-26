@@ -1,6 +1,8 @@
 import GridContainer from "@/components/layout/GridContainer";
 import StockGrid from "@/components/stocks/StockGrid";
 import NotesEditor from "@/components/shared/NotesEditor";
+import MarketNewsTable from "@/components/shared/MarketNewsTable";
+
 // Temporary Placeholder Component
 // We will replace these with real components (NotesEditor, PortfolioTable, etc.) in the next steps
 const Placeholder = ({ title, color, desc }: { title: string; color: string; desc?: string }) => (
@@ -50,13 +52,7 @@ export default function StocksDashboardPage() {
                 }
 
                 // BOTTOM: Full Screen News Section
-                bottomSection={
-                    <Placeholder
-                        title="BOTTOM: News & Market Data"
-                        color="bg-slate-200"
-                        desc="Tabs: NewsAPI Search & Investing.com RSS Table."
-                    />
-                }
+                bottomSection={<MarketNewsTable />}
             />
         </GridContainer>
     );
