@@ -72,15 +72,32 @@ export function useForexData() {
 
     // --- NEW: Auto-Refresh Logic ---
     useEffect(() => {
-        // Check if we already updated today
+        // 1. Check if we are in the browser
+        if (typeof window === "undefined") return;
+
         const today = new Date().toLocaleDateString();
 
-        // If the saved date is NOT today, run the update
-        if (lastFetch !== today) {
-            console.log(`Data is from ${lastFetch || "never"}. Auto-refreshing for ${today}...`);
-            fetchAndCalculate();
+        // 2. READ DIRECTLY from LocalStorage to bypass React State delay
+        // We get the raw string, e.g., "\"11/26/2025\"" (because it's JSON stringified)
+        const rawStored = window.localStorage.getItem("forex_last_fetch_date");
+
+        let storedDate = "";
+        if (rawStored) {
+            try {
+                storedDate = JSON.parse(rawStored);
+            } catch (e) {
+                storedDate = "";
+            }
         }
-    }, [lastFetch, fetchAndCalculate]);
+
+        // 3. Only fetch if the DISK data is actually old
+        if (storedDate !== today) {
+            console.log(`[Auto-Refresh] Stored: "${storedDate}" vs Today: "${today}". Updating...`);
+            fetchAndCalculate();
+        } else {
+            console.log("[Auto-Refresh] Data is up to date.");
+        }
+    }, [fetchAndCalculate]); // Remove 'lastFetch' from dependencies to avoid loop
 
     return { history, loading, fetchAndCalculate, lastFetch };
 }
