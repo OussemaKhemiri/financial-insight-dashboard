@@ -69,3 +69,37 @@ export function calculateEventScore(
 export function calculateTrendScore(oldScore: number, eventScore: number, speed: number = 0.2): number {
     return oldScore + speed * (eventScore - oldScore);
 }
+
+/**
+ * Step 1: Net Sentiment Score
+ * (Base - Quote) / 2
+ */
+export function calculatePairScore(baseScore: number, quoteScore: number): number {
+    return (baseScore - quoteScore) / 2;
+}
+
+/**
+ * Step 2: Fair Value
+ * Anchor * (1 + (Score * VolatilityFactor))
+ */
+export function calculateFairValue(anchorPrice: number, pairScore: number, volatilityFactor: number = 0.01): number {
+    return anchorPrice * (1 + (pairScore * volatilityFactor));
+}
+
+/**
+ * Generate Bell Curve Data Points for Recharts
+ */
+export function generateNormalDistribution(mean: number, stdDev: number, rangeMultipliers: number = 4) {
+    const points = [];
+    const step = (stdDev * rangeMultipliers * 2) / 60; // 60 points for smoothness
+    const start = mean - (stdDev * rangeMultipliers);
+    const end = mean + (stdDev * rangeMultipliers);
+
+    for (let x = start; x <= end; x += step) {
+        // Gaussian Function: f(x) = (1 / (σ * sqrt(2π))) * e^(-0.5 * ((x - μ) / σ)^2)
+        const exponent = -0.5 * Math.pow((x - mean) / stdDev, 2);
+        const y = (1 / (stdDev * Math.sqrt(2 * Math.PI))) * Math.exp(exponent);
+        points.push({ price: x, density: y });
+    }
+    return points;
+}

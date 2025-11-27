@@ -5,6 +5,7 @@ import MarketNewsTable from "@/components/shared/MarketNewsTable";
 import CalendarEmbed from "@/components/forex/CalendarEmbed";
 import ForexPortfolio from "@/components/forex/ForexPortfolio";
 import StrengthCharts from "@/components/forex/StrengthCharts"; 
+import FairValueCalc from "@/components/forex/FairValueCalc";
 
 // Helper component for placeholders
 const Placeholder = ({ title, color }: { title: string; color: string }) => (
@@ -27,9 +28,7 @@ export default function ForexDashboardPage() {
                 upRight={<CalendarEmbed />}
                 downLeftPortfolio={<ForexPortfolio />}
                 downLeftCharts={<StrengthCharts />} 
-                downRight={
-                    <Placeholder title="DOWN RIGHT: Fair Value Calc" color="bg-purple-50" />
-                }
+                downRight={<FairValueCalc />}
                 bottomSection={<MarketNewsTable />}
             />
         </GridContainer>
