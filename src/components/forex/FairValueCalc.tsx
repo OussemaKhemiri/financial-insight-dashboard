@@ -42,7 +42,7 @@ export default function FairValueCalc() {
                         value={input}
                         onChange={(e) => setInput(e.target.value.toUpperCase())}
                         placeholder="EURUSD..."
-                        className="w-full text-xs p-2 border rounded font-mono uppercase focus:ring-2 focus:ring-purple-500 outline-none"
+                        className="w-full text-xs p-2 border rounded font-mono uppercase focus:ring-2 focus:ring-purple-500 outline-none text-purple-600"
                     />
                     <button
                         type="submit"
