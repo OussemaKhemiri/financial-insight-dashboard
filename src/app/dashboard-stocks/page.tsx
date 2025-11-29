@@ -3,6 +3,8 @@ import StockGrid from "@/components/stocks/StockGrid";
 import NotesEditor from "@/components/shared/NotesEditor";
 import MarketNewsTable from "@/components/shared/MarketNewsTable";
 import GeminiAnalysis from "@/components/stocks/GeminiAnalysis";
+import PortfolioTable from "@/components/stocks/PortfolioTable";
+import EarningsAnalysis from "@/components/stocks/EarningsAnalysis";
 
 // Temporary Placeholder Component
 // We will replace these with real components (NotesEditor, PortfolioTable, etc.) in the next steps
@@ -32,20 +34,12 @@ export default function StocksDashboardPage() {
 
                 // DOWN LEFT: Portfolio Table
                 downLeft={
-                    <Placeholder
-                        title="DOWN LEFT: Portfolio"
-                        color="bg-green-100"
-                        desc="Table: Ticker, Earnings Prev/Next, Action."
-                    />
+                    <PortfolioTable />
                 }
 
                 // DOWN RIGHT: Gemini Earnings Analysis
                 downRight={
-                    <Placeholder
-                        title="DOWN RIGHT: Earnings Analysis (Gemini)"
-                        color="bg-purple-100"
-                        desc="Paste earnings report -> Inject Portfolio -> AI Analysis."
-                    />
+                    <EarningsAnalysis />
                 }
 
                 // BOTTOM: Full Screen News Section
