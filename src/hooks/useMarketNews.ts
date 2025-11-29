@@ -4,6 +4,8 @@ import { safelyGetStorage, safelySetStorage } from "@/lib/storage";
 // --- Configuration ---
 const MAX_ITEMS_PER_COLUMN = 50;
 const STORAGE_KEY = "market_news_cache";
+const TIMESTAMP_KEY = "market_news_last_fetch"; // New key to track time
+const CACHE_DURATION = 30 * 60 * 1000; // 5 Minutes in milliseconds
 
 // The Feed Map provided by user
 const FEED_URLS: Record<string, string[]> = {
@@ -44,11 +46,10 @@ const FEED_URLS: Record<string, string[]> = {
     ],
 };
 
-// Types
 export interface NewsItem {
     title: string;
     link: string;
-    pubDate: string; // ISO string
+    pubDate: string;
     guid?: string;
 }
 
@@ -83,42 +84,26 @@ export function useMarketNews() {
         }
     };
 
-    const refreshNews = useCallback(async () => {
+    // The heavy lifting function (fetching from API)
+    const fetchFreshData = useCallback(async (currentCache: NewsData) => {
         setLoading(true);
-
-        // 1. Load existing cache first to display immediately
-        const cached = safelyGetStorage(STORAGE_KEY);
-        if (cached) {
-            setData(cached);
-        }
-
-        const newData: NewsData = { ...cached }; // Start with old data
-
-        // 2. Iterate through categories
+        const newData: NewsData = { ...currentCache };
         const categories = Object.keys(FEED_URLS);
 
-        // We process categories in parallel
         await Promise.all(categories.map(async (category) => {
             const urls = FEED_URLS[category];
-
-            // Fetch all feeds for this category in parallel
             const results = await Promise.allSettled(urls.map(url => fetchSingleFeed(url)));
 
             let incomingItems: NewsItem[] = [];
             results.forEach(res => {
-                if (res.status === "fulfilled") {
-                    incomingItems.push(...res.value);
-                }
+                if (res.status === "fulfilled") incomingItems.push(...res.value);
             });
 
-            // 3. Merge Strategy:
-            // Get old items for this category
-            const oldItems = cached?.[category] || [];
-
-            // Combine: Incoming + Old
+            // Merge with old items
+            const oldItems = currentCache?.[category] || [];
             const combined = [...incomingItems, ...oldItems];
 
-            // Deduplicate by LINK (Keep the first occurrence found)
+            // Deduplicate
             const seen = new Set();
             const uniqueItems = combined.filter(item => {
                 const duplicate = seen.has(item.link);
@@ -126,24 +111,53 @@ export function useMarketNews() {
                 return !duplicate;
             });
 
-            // Sort by Date (Newest First)
+            // Sort & Slice
             uniqueItems.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
-
-            // Slice to Cap (Max 50)
             newData[category] = uniqueItems.slice(0, MAX_ITEMS_PER_COLUMN);
         }));
 
-        // 4. Save & Update
+        // Save Data AND Timestamp
         safelySetStorage(STORAGE_KEY, newData);
+        safelySetStorage(TIMESTAMP_KEY, Date.now().toString());
+
         setData(newData);
         setLastUpdated(new Date());
         setLoading(false);
     }, []);
 
-    // Initial Load
+    // Exposed function for the manual "Refresh" button
+    // This forces a fetch regardless of time
+    const refreshNews = useCallback(() => {
+        const cached = safelyGetStorage(STORAGE_KEY) || {};
+        fetchFreshData(cached);
+    }, [fetchFreshData]);
+
+    // Initial Load Logic
     useEffect(() => {
-        refreshNews();
-    }, [refreshNews]);
+        // 1. Load data from local storage immediately
+        const cachedData = safelyGetStorage(STORAGE_KEY);
+        const lastFetchTime = safelyGetStorage(TIMESTAMP_KEY);
+
+        if (cachedData) {
+            setData(cachedData);
+            if (lastFetchTime) {
+                setLastUpdated(new Date(parseInt(lastFetchTime)));
+            }
+        }
+
+        // 2. Check if we actually need to fetch (is data older than 5 mins?)
+        const now = Date.now();
+        const lastTime = lastFetchTime ? parseInt(lastFetchTime) : 0;
+        const isStale = (now - lastTime) > CACHE_DURATION;
+
+        // 3. If no data exists OR data is old, fetch new.
+        // Otherwise, stop loading because we already set the cached data above.
+        if (!cachedData || isStale) {
+            fetchFreshData(cachedData || {});
+        } else {
+            setLoading(false);
+        }
+    }, [fetchFreshData]);
 
     return { data, loading, refreshNews, lastUpdated };
 }
