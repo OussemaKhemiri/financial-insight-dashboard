@@ -173,7 +173,7 @@ export default function ForexPortfolio() {
             </div>
 
             {/* Input Footer */}
-            <div className="border-t p-2 bg-slate-50 grid grid-cols-[1fr_auto_auto] gap-2 items-center">
+            <div className="border-t p-2 bg-slate-50 grid grid-cols-[1fr_auto_auto] gap-2 items-center text-orange-600">
                 <input
                     type="text"
                     placeholder="Pair (e.g. EURUSD)"

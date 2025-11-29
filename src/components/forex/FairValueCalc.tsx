@@ -95,7 +95,7 @@ export default function FairValueCalc() {
                         </div>
 
                         {/* Chart */}
-                        <div className="flex-1 w-full min-h-[150px]">
+                        <div className="flex-1 w-full min-h-[150px] text-orange-600">
                             <ResponsiveContainer width="100%" height="100%">
                                 <AreaChart data={data.curveData}>
                                     <defs>

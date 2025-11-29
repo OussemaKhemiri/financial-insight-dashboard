@@ -2,6 +2,7 @@ import GridContainer from "@/components/layout/GridContainer";
 import StockGrid from "@/components/stocks/StockGrid";
 import NotesEditor from "@/components/shared/NotesEditor";
 import MarketNewsTable from "@/components/shared/MarketNewsTable";
+import GeminiAnalysis from "@/components/stocks/GeminiAnalysis";
 
 // Temporary Placeholder Component
 // We will replace these with real components (NotesEditor, PortfolioTable, etc.) in the next steps
@@ -26,11 +27,7 @@ export default function StocksDashboardPage() {
 
                 // UP RIGHT: Gemini Article Analysis
                 upRight={
-                    <Placeholder
-                        title="UP RIGHT: Article Analysis (Gemini)"
-                        color="bg-blue-100"
-                        desc="Paste article -> Inject Portfolio -> AI Analysis."
-                    />
+                    <GeminiAnalysis />
                 }
 
                 // DOWN LEFT: Portfolio Table
