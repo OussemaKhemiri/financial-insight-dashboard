@@ -51,7 +51,7 @@ export async function analyzePortfolioWithGemini(portfolioData: any[]) {
   }
   `;
 
-    const model = "gemini-2.0-flash-lite";
+    const model = "gemini-2.0-flash";
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
     const payload = {
@@ -121,6 +121,11 @@ export async function analyzeFinanceArticle(articleText: string) {
 You are a top-tier financial analyst and strategic advisor. You have access to Google Search. 
 Your purpose is to deconstruct financial news with depth, foresight, and critical rigor of this article :
 "${articleText}"
+
+NEGATIVE CONSTRAINTS:
+- Do NOT say "Okay", "Here is the analysis", or "I will do that".
+- Do NOT add any introductory text.
+- START IMMEDIATELY with "### 1. EXECUTIVE SUMMARY".
 
 You MUST return the response using **EXACTLY** this format with "###" separators. Do not change the headers.
 

@@ -86,7 +86,7 @@ export default function EarningsAnalysis() {
                                 <input
                                     type="text"
                                     placeholder="e.g. AAPL"
-                                    className="w-full text-sm border rounded p-2 focus:ring-2 focus:ring-indigo-500 outline-none uppercase font-mono"
+                                    className="w-full text-sm border rounded p-2 focus:ring-2 focus:ring-indigo-500 outline-none uppercase font-mono text-orange-600"
                                     value={inputs.ticker}
                                     onChange={(e) => handleInputChange("ticker", e.target.value)}
                                 />
@@ -96,7 +96,7 @@ export default function EarningsAnalysis() {
                                 <input
                                     type="text"
                                     placeholder="e.g. $150.00"
-                                    className="w-full text-sm border rounded p-2 focus:ring-2 focus:ring-indigo-500 outline-none"
+                                    className="w-full text-sm border rounded p-2 focus:ring-2 focus:ring-indigo-500 outline-none text-orange-600"
                                     value={inputs.price}
                                     onChange={(e) => handleInputChange("price", e.target.value)}
                                 />
@@ -108,7 +108,7 @@ export default function EarningsAnalysis() {
                             <label className="text-xs font-bold text-slate-500 mb-1 block">Company Profile (Description)</label>
                             <textarea
                                 placeholder="Paste 'Business Description' here..."
-                                className="w-full text-xs border rounded p-2 h-20 focus:ring-2 focus:ring-indigo-500 outline-none resize-none"
+                                className="w-full text-xs border rounded p-2 h-20 focus:ring-2 focus:ring-indigo-500 outline-none resize-none text-orange-600"
                                 value={inputs.description}
                                 onChange={(e) => handleInputChange("description", e.target.value)}
                             />
@@ -119,7 +119,7 @@ export default function EarningsAnalysis() {
                             <label className="text-xs font-bold text-slate-500 mb-1 block">Valuation Measures (P/E, Market Cap, etc)</label>
                             <textarea
                                 placeholder="Paste Valuation table data here..."
-                                className="w-full text-xs border rounded p-2 h-20 focus:ring-2 focus:ring-indigo-500 outline-none resize-none font-mono"
+                                className="w-full text-xs border rounded p-2 h-20 focus:ring-2 focus:ring-indigo-500 outline-none resize-none font-mono text-orange-600"
                                 value={inputs.valuation}
                                 onChange={(e) => handleInputChange("valuation", e.target.value)}
                             />
@@ -130,7 +130,7 @@ export default function EarningsAnalysis() {
                             <div>
                                 <label className="text-xs font-bold text-slate-500 mb-1 block">Income Statement (Revenue, Net Income)</label>
                                 <textarea
-                                    className="w-full text-xs border rounded p-2 h-16 focus:ring-2 focus:ring-indigo-500 outline-none resize-none font-mono"
+                                    className="w-full text-xs border rounded p-2 h-16 focus:ring-2 focus:ring-indigo-500 outline-none resize-none font-mono text-orange-600"
                                     value={inputs.income}
                                     onChange={(e) => handleInputChange("income", e.target.value)}
                                 />
@@ -138,7 +138,7 @@ export default function EarningsAnalysis() {
                             <div>
                                 <label className="text-xs font-bold text-slate-500 mb-1 block">Balance Sheet (Assets, Liabilities)</label>
                                 <textarea
-                                    className="w-full text-xs border rounded p-2 h-16 focus:ring-2 focus:ring-indigo-500 outline-none resize-none font-mono"
+                                    className="w-full text-xs border rounded p-2 h-16 focus:ring-2 focus:ring-indigo-500 outline-none resize-none font-mono text-orange-600"
                                     value={inputs.balance}
                                     onChange={(e) => handleInputChange("balance", e.target.value)}
                                 />
@@ -146,7 +146,7 @@ export default function EarningsAnalysis() {
                             <div>
                                 <label className="text-xs font-bold text-slate-500 mb-1 block">Cash Flow (Operating, Free Cash Flow)</label>
                                 <textarea
-                                    className="w-full text-xs border rounded p-2 h-16 focus:ring-2 focus:ring-indigo-500 outline-none resize-none font-mono"
+                                    className="w-full text-xs border rounded p-2 h-16 focus:ring-2 focus:ring-indigo-500 outline-none resize-none font-mono text-orange-600"
                                     value={inputs.cashFlow}
                                     onChange={(e) => handleInputChange("cashFlow", e.target.value)}
                                 />
