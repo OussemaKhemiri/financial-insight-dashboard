@@ -23,7 +23,7 @@ const getApiKey = () => {
     }
     return "";
 };
-
+///////////////////////////FOREX ANALYSIS WITH SEARCH GROUNDING///////////////////////////
 export async function analyzePortfolioWithGemini(portfolioData: any[]) {
     const apiKey = getApiKey();
 
@@ -112,7 +112,7 @@ export async function analyzePortfolioWithGemini(portfolioData: any[]) {
 }
 
 
-
+////////////////////////////FINANCE ARTICLE ANALYSIS WITH SEARCH GROUNDING///////////////////////////
 export async function analyzeFinanceArticle(articleText: string) {
     const apiKey = getApiKey();
     if (!apiKey) throw new Error("Missing Gemini API Key. Please set it in Settings.");
@@ -200,7 +200,7 @@ Focus on actionable financial insights and market-moving information.
     }
 }
 
-
+///////////////////////////STOCK DATA ENRICHMENT WITH SEARCH GROUNDING///////////////////////////
 export async function enrichStockData(ticker: string) {
     const apiKey = getApiKey();
     if (!apiKey) throw new Error("Missing Gemini API Key.");
@@ -277,14 +277,14 @@ export async function enrichStockData(ticker: string) {
 }
 
 
-
+////////////////////////////EARNINGS ANALYSIS WITHOUT SEARCH GROUNDING///////////////////////////
 export async function analyzeEarnings(inputs: EarningsInput) {
     const apiKey = getApiKey();
     if (!apiKey) throw new Error("Missing Gemini API Key.");
 
     const promptText = `
-  System Role: You are a strict Value Investor and Financial Analyst.
-  
+  System Role: You are a seasoned Portfolio Manager and Value Investor (CFA Charterholder). You combine fundamental analysis with market cycle psychology.
+
   Input Data:
   - Ticker: ${inputs.ticker}
   - Current Price: ${inputs.price}
@@ -294,25 +294,52 @@ export async function analyzeEarnings(inputs: EarningsInput) {
   - Balance Sheet: ${inputs.balance}
   - Cash Flow: ${inputs.cashFlow}
 
-  Task: Analyze this company and provide a rating (BUY, SELL, or HOLD).
+  Task: Perform a deep-dive analysis to determine the stock's Investment Grade, Market Stage, and Strategic Categories.
+  Note: If TTM data contains '--' or is missing, use the most recent Full Year column (e.g., 12/31/2024) for your analysis, but mention this in the 'bearishPoints' as a data latency risk.
+  ---------------------------------------------------
+  ANALYSIS FRAMEWORK:
   
-  Step-by-Step Logic:
-  1. Sector Check: Identify industry risks based on Description.
-  2. Financial Health Score: Check Balance Sheet (Debt vs Cash).
-  3. Quality of Earnings: Check Cash Flow (Operations vs Debt/Dilution).
-  4. Valuation Check: Compare P/E, P/S to growth. Cheap or Expensive?
+  1. CATEGORY IDENTIFICATION (Choose ONE best fit):
+     - "Market Leader": Dominant market share, huge cap, stable margins.
+     - "Top Competitor": Strong #2 or #3 player, fighting for share.
+     - "Institutional Favorite": High quality, steady growth, widely held.
+     - "Turnaround": Recent poor performance but clear signs of operational fixing.
+     - "Cyclical": Performance tied heavily to economic macro-cycles (Commodities, Autos).
+     - "Laggard": Losing market share, deteriorating fundamentals, "Value Trap".
 
-  IMPORTANT: Return ONLY raw JSON. No Markdown.
+  2. MARKET CYCLE STAGE (Estimate based on Valuation & Growth Momentum):
+     - "Stage 1 (Neglect/Consolidation)": Low P/E, flat price, boring news, but solid floor.
+     - "Stage 2 (Advancing/Accumulation)": Rising growth, expanding P/E, positive momentum.
+     - "Stage 3 (Topping/Distribution)": Growth slowing, very high P/E, insiders selling, peak optimism.
+     - "Stage 4 (Declining/Capitulation)": Missing earnings, compressing P/E, bad news piling up.
+
+  3. PRICING LOGIC:
+     - "Intrinsic Value": Calculate the true worth based on DCF or Historical Multiples.
+     - "Buy Below": A price offering a Margin of Safety (usually 10-20% below Intrinsic).
+     - "Volatility Flag": A price level so low that it implies the thesis is broken (e.g., if it drops 30% from here without news, it's not a bargain, it's a bankruptcy risk).
+
+  ---------------------------------------------------
+  OUTPUT INSTRUCTIONS:
+  Return ONLY raw JSON. No Markdown formatting.
   
   JSON FORMAT:
   {
     "verdict": "BUY | SELL | HOLD",
-    "oneLiner": "A single sentence summary.",
+    "category": "One of the 6 categories above",
+    "marketStage": "One of the 4 stages above",
+    "healthScore": 0 to 100 (Integer),
+    "oneLiner": "A sharp, professional summary of the situation.",
+    "priceTargets": {
+       "current": ${inputs.price},
+       "intrinsicValue": "Estimated Fair Value (Number)",
+       "buyBelow": "Target Entry Price (Number)",
+       "volatilityWarning": "The price level where the 'Value Thesis' breaks (Number)"
+    },
     "bullishPoints": ["Point 1", "Point 2", "Point 3"],
     "bearishPoints": ["Risk 1", "Risk 2", "Risk 3"],
-    "keyMetrics": "Brief text highlighting the most critical numbers found."
+    "keyMetrics": "Brief text highlighting critical numbers (e.g. 'Debt/EBITDA is 4x')."
   }
-  `;
+`;
 
     const model = "gemini-2.0-flash";
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
