@@ -16,7 +16,7 @@ export default function SettingsPage() {
                 {/* API Keys Section */}
                 <div className="flex flex-col gap-4">
                     <h2 className="text-lg font-semibold text-slate-700">API Configuration</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-800">
                         <ApiKeyInput
                             storageKey="gemini_api_key"
                             label="Gemini API Key"

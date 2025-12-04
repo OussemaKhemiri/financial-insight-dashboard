@@ -54,7 +54,7 @@ export default function StorageTable() {
     };
 
     return (
-        <div className="w-full bg-white border rounded-lg shadow-sm overflow-hidden">
+        <div className="w-full bg-white border rounded-lg shadow-sm overflow-hidden text-slate-700">
             <div className="p-4 bg-slate-50 border-b">
                 <h3 className="font-bold text-slate-700">Local Storage Inspector</h3>
                 <p className="text-xs text-slate-500">View and manage all persisted data.</p>
