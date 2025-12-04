@@ -91,21 +91,71 @@ Since there is no backend, you **do not** need a `.env` file for the API key.
 ## 📂 Project Structure
 
 ```bash
-src/
-├── app/                  # Next.js App Router pages
-├── components/           
-│   ├── forex/            # Forex specific components (StrengthChart, Portfolio)
-│   ├── stocks/           # Stocks components (PortfolioTable, EarningsAnalysis)
-│   └── shared/           # Reusable UI (MarketNewsTable, Sidebar)
-├── hooks/                
-│   ├── useLocalStorage.ts # The "Database" logic
-│   ├── useForexData.ts    # Scraping & Backfill logic
-│   ├── useGemini.ts       # AI communication hooks
-│   └── ...
-└── lib/                  
-    ├── gemini.ts         # Prompts & API calls
-    ├── scraping.ts       # HTML parsing logic
-    └── storage.ts        # Safe storage utilities
+my-financial-dashboard/
+├── public/                     # Static assets (favicons, images, logos)
+├── .env.local                  # (Optional) Environment variables
+├── next.config.js              # Next.js config
+├── package.json                # Dependencies
+├── tailwind.config.js          # Tailwind CSS config
+├── tsconfig.json               # TypeScript config
+│
+└── src/                        # Source Code
+    ├── app/                    # Next.js App Router
+    │   ├── layout.tsx          # Global Root Layout (includes <Navbar>)
+    │   ├── page.tsx            # Home (Redirects to /dashboard-stocks)
+    │   ├── globals.css         # Global Tailwind imports & custom CSS
+    │   │
+    │   ├── dashboard-stocks/   # Route: /dashboard-stocks
+    │   │   └── page.tsx        # Server Component: Renders <StockGrid>
+    │   │
+    │   ├── dashboard-forex/    # Route: /dashboard-forex
+    │   │   └── page.tsx        # Server Component: Renders <ForexGrid>
+    │   │
+    │   └── settings/           # Route: /settings
+    │       └── page.tsx        # Renders Settings components
+    │
+    ├── components/             # UI Components
+    │   ├── layout/             # Structural elements
+    │   │   ├── Navbar.tsx      # Top Navigation Bar
+    │   │   └── GridContainer.tsx # Reusable wrapper for grid layouts
+    │   │
+    │   ├── shared/             # Reused across pages
+    │   │   ├── MarketNewsTable.tsx # RSS Feed Table (Bottom of dashboards)
+    │   │   ├── NotesEditor.tsx     # Reusable Text Area for notes
+    │   │   └── Modal.tsx           # (Optional) Reusable Modal for analyses
+    │   │
+    │   ├── stocks/             # Stock-specific UI
+    │   │   ├── StockGrid.tsx       # The Layout Grid specific to Stocks page
+    │   │   ├── PortfolioTable.tsx  # The Stock List with AI enrichment
+    │   │   ├── GeminiAnalysis.tsx  # Article Analysis (Text Input -> Analysis)
+    │   │   └── EarningsAnalysis.tsx # Financial Data Input -> Analysis
+    │   │
+    │   ├── forex/              # Forex-specific UI
+    │   │   ├── ForexGrid.tsx       # The Layout Grid specific to Forex page
+    │   │   ├── ForexPortfolio.tsx  # AI Watchlist for pairs
+    │   │   ├── StrengthCharts.tsx  # The Relative Strength Visualization
+    │   │   ├── FairValueCalc.tsx   # Bell Curve Calculator
+    │   │   └── CalendarEmbed.tsx   # Investing.com Economic Calendar
+    │   │
+    │   └── settings/           # Settings UI
+    │       ├── ApiKeyInput.tsx     # Input field for Gemini Key
+    │       └── StorageTable.tsx    # Raw LocalStorage Viewer/Editor
+    │
+    ├── hooks/                  # React Hooks (State & Logic)
+    │   ├── useLocalStorage.ts      # Core persistence hook
+    │   ├── useGemini.ts            # General AI Loading/Error state handler
+    │   ├── useMarketNews.ts        # RSS Fetching & Caching logic
+    │   ├── useForexData.ts         # Scraper, Backfill logic & History state
+    │   ├── useArticleAnalysis.ts   # Logic for GeminiAnalysis component
+    │   ├── useEarningsAnalysis.ts  # Logic for EarningsAnalysis component
+    │   └── useFairValue.ts         # Math logic wrapper for Fair Value
+    │
+    └── lib/                    # Pure Logic (No React State)
+        ├── storage.ts              # Safe LocalStorage accessors (get/set)
+        ├── gemini.ts               # API calls & Prompts (Stock, Article, Earnings)
+        ├── scraping.ts             # ForexFactory HTML parsing logic
+        ├── math-forex.ts           # Math formulas (Strength, Bell Curve)
+        └── constants.ts            # Proxy URLs, Feed URLs, default configs
 ```
 
 ## ⚠️ Disclaimer
