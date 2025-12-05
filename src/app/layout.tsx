@@ -20,6 +20,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Navbar />
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
