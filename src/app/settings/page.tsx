@@ -1,5 +1,6 @@
 import GridContainer from "@/components/layout/GridContainer";
 import ApiKeyInput from "@/components/settings/ApiKeyInput";
+import ModelNameInput from "@/components/settings/ModelNameInput";
 import StorageTable from "@/components/settings/StorageTable";
 
 export default function SettingsPage() {
@@ -21,6 +22,11 @@ export default function SettingsPage() {
                             storageKey="gemini_api_key"
                             label="Gemini API Key"
                             placeholder="Paste your Google Gemini Key here..."
+                        />
+                        <ModelNameInput
+                            storageKey="gemini_model_name"
+                            label="Gemini Model Name"
+                            placeholder="gemini-2.5-flash-live"
                         />
                     </div>
                 </div>

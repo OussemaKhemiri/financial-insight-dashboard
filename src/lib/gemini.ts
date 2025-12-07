@@ -23,6 +23,22 @@ const getApiKey = () => {
     }
     return "";
 };
+
+const getModelName = () => {
+    if (typeof window !== "undefined") {
+        const stored = localStorage.getItem("gemini_model_name");
+        if (!stored) return "gemini-2.5-flash-live";
+
+        let model = stored.trim();
+        // Remove surrounding quotes if present
+        if (model.startsWith('"') && model.endsWith('"')) {
+            model = model.slice(1, -1);
+        }
+        return model;
+    }
+    // Server-side fallback
+    return "gemini-2.5-flash-live";
+};
 ///////////////////////////FOREX ANALYSIS WITH SEARCH GROUNDING///////////////////////////
 export async function analyzePortfolioWithGemini(portfolioData: any[]) {
     const apiKey = getApiKey();
@@ -51,7 +67,7 @@ export async function analyzePortfolioWithGemini(portfolioData: any[]) {
   }
   `;
 
-    const model = "gemini-2.0-flash";
+    const model = getModelName();
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
     const payload = {
@@ -161,7 +177,7 @@ Brief overview of the article's main points
 Focus on actionable financial insights and market-moving information.
 `;
 
-    const model = "gemini-2.0-flash";
+    const model = getModelName();
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
     const payload = {
@@ -225,7 +241,7 @@ export async function enrichStockData(ticker: string) {
   }
   `;
 
-    const model = "gemini-2.0-flash";
+    const model = getModelName();
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
     const payload = {
@@ -341,7 +357,7 @@ export async function analyzeEarnings(inputs: EarningsInput) {
   }
 `;
 
-    const model = "gemini-2.0-flash";
+    const model = getModelName();
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
     const payload = {
